@@ -58,6 +58,8 @@
 					</array>
 					<key>Custom PS2 Map</key>
 					<array>
+						<string>3a=1</string>
+						<string>1=3a</string>
 						<string>;Items must be strings in the form of scanfrom=scanto (in hex)</string>
 					</array>
 					<key>Custom ADB Map</key>
@@ -298,6 +300,8 @@
 						</array>
 						<key>Custom PS2 Map</key>
 						<array>
+							<string>1=3a</string>
+							<string>3a=1</string>						
 							<string>56=2b</string>
 							<string>29=56</string>
 							<string>2b=29</string>
