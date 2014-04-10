@@ -44,6 +44,15 @@
 #include "VoodooPS2Controller.h"
 #include "VoodooPS2SynapticsTouchPad.h"
 
+//REVIEW: avoids problem with Xcode 5.1.0 where -dead_strip eliminates these required symbols
+#include <libkern/OSKextLib.h>
+void* _org_rehabman_dontstrip_[] =
+{
+    (void*)&OSKextGetCurrentIdentifier,
+    (void*)&OSKextGetCurrentLoadTag,
+    (void*)&OSKextGetCurrentVersionString,
+};
+
 // =============================================================================
 // ApplePS2SynapticsTouchPad Class Implementation
 //
@@ -2442,13 +2451,16 @@ void ApplePS2SynapticsTouchPad::setParamPropertiesGated(OSDictionary * config)
 
 IOReturn ApplePS2SynapticsTouchPad::setParamProperties(OSDictionary* dict)
 {
+    ////IOReturn result = super::IOHIDevice::setParamProperties(dict);
     if (_cmdGate)
     {
         // syncronize through workloop...
-        _cmdGate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &ApplePS2SynapticsTouchPad::setParamPropertiesGated), dict);
+        ////_cmdGate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &ApplePS2SynapticsTouchPad::setParamPropertiesGated), dict);
+        setParamPropertiesGated(dict);
     }
     
     return super::setParamProperties(dict);
+    ////return result;
 }
 
 IOReturn ApplePS2SynapticsTouchPad::setProperties(OSObject *props)
