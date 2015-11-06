@@ -21,7 +21,7 @@ https://code.google.com/p/os-x-voodoo-ps2-controller/downloads/list
 
 ### Build Environment
 
-My build environment is currently Xcode 4.6.3, using SDK 10.8, targeting OS X 10.6.
+My build environment is currently Xcode 6.1, using SDK 10.8, targeting OS X 10.6.
 
 No other build environment is supported.
 
@@ -56,8 +56,6 @@ make BITS=32
 
 The source code is maintained at the following sites:
 
-https://code.google.com/p/os-x-voodoo-ps2-controller/
-
 https://github.com/RehabMan/OS-X-Voodoo-PS2-Controller
 
 https://bitbucket.org/RehabMan/os-x-voodoo-ps2-controller
@@ -86,6 +84,67 @@ Note: often times you will see either of the two problems mentioned above right 
 
 
 ### Change Log:
+
+2015-11-01 v1.8.18
+
+- Added ability to configure from ACPI without modifying the Info.plist.  See the u430 patch repo for an extensive example.
+
+- All special configuration for the Lenovo u430 was removed.  You must use the new ACPI setup with the new kext if you have a Lenovo u430.  Also, the new ACPI setup is not compatible with the old kext, just in case you were wondering.
+
+- Added WakeMouseFirst option to upon wake from sleep initialize the mouse, then keyboard instead of the normal order (keyboard, then mouse).  Set WakeMouseFirst=true for mouse, then keybaord.  Default is WakeMouseFirst=false.
+
+- Fixed a memory leak in VoodooPS2Daemon
+
+
+2015-10-29 v1.8.17
+
+- Added DynamicEWMode option (default is true).  This is specifically to improve two finger scroll responsiveness with ClickPads.  Instead of always forcing the trackpad into EW mode (EW mode enables two finger data), EW mode is only entered upon clicking the pad.  Since each finger gets half bandwidth in EW mode and during a scroll we only need one finger (with indication of two), we can avoid entering EW mode resulting in double the bandwidth during the two finger scroll.  Of course, EW mode is needed when the pad is clicked (for holding the button with one finger while dragging with the other), so EW mode is now turned on/off dynamically depending on whether the button is clicked.
+
+- DynamicEW mode can be turned off by setting DynamicEWMode=false in Info.plist
+
+
+2015-10-16 v1.8.16
+
+- VoodooPS2Daemon now works correctly with 10.11
+
+- change versioning/marking scheme
+
+- some minor bug fixes/cleanup
+
+
+2015-05-02 v1.8.15
+
+- Fix a problem with phantom key event e027 on certain ProBook laptops causing spurious/random fnkeys toggle
+
+- Allow for discrete fnkeys toggle and discrete trackpad toggle setup
+
+
+2015-02-23 v1.8.14
+
+- Fix a problem with u430 F9 key when "Use all F1, F2..." is selected.  This resulted in a new way to send both make/break keys from ACPI Notify (0x03xx and 0x04xx).
+
+
+2014-10-16 v1.8.13
+
+- Default for USBMouseStopsTrackpad is now zero instead of one.  This means the trackpad will not be disabled at the login screen when a USB mouse is plugged in.
+
+- turn off FakeMiddleButton in VoodooPS2Mouse.kext
+
+- some tweaks for ideapad
+
+- tuned movement/acceleration to better match the MacBookAir6,2.  Changed resolution to 400 from higher values, which seems to help...
+
+- other fixes/changes: see commit log for more information
+
+
+2014-05-23 v1.8.12
+
+- Fix bugs.  See commit log/issues database for details.
+
+- Finished Macro Inversion option for converting Fn+fkeys in challenging situations.
+
+- Lenovo u430 profile is working well now  (due to Macro Inversion and other features).
+
 
 2014-02-24 v1.8.11
 

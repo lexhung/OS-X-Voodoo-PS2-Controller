@@ -5,7 +5,7 @@
 	<key>Source Code</key>
 	<string>https://github.com/RehabMan/OS-X-Voodoo-PS2-Controller</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.8.11, Copyright Apple Computer, Inc. 2002-2003, mackerintel 2008, RehabMan 2012-2013</string>
+	<string>${MODULE_VERSION}, Copyright Apple Computer, Inc. 2002-2003, mackerintel 2008, RehabMan 2012-2013</string>
 	<key>CFBundleExecutable</key>
 	<string>VoodooPS2Trackpad</string>
 	<key>CFBundleIdentifier</key>
@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.8</string>
+	<string>${MODULE_VERSION}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.8.11</string>
+	<string>${MODULE_VERSION}</string>
 	<key>IOKitPersonalities</key>
 	<dict>
 		<key>ALPS GlidePoint</key>
@@ -66,22 +66,20 @@
 					<string>ProBook</string>
 					<key>179C</key>
 					<string>ProBook</string>
+					<key>17A9</key>
+					<string>ProBook</string>
 					<key>17F0</key>
 					<string>ProBook</string>
 					<key>17F3</key>
 					<string>ProBook</string>
 					<key>17F6</key>
 					<string>ProBook</string>
-				</dict>
-				<key>Lenovo</key>
-				<dict>
-					<key>Haswell-Ideapad</key>
-					<dict>
-						<key>DisableDevice</key>
-						<true/>
-					</dict>
-					<key>U430</key>
-					<string>Haswell-Ideapad</string>
+					<key>198F</key>
+					<string>ProBook</string>
+					<key>1942</key>
+					<string>ProBook</string>
+					<key>1949</key>
+					<string>ProBook</string>
 				</dict>
 			</dict>
 		</dict>
@@ -127,22 +125,20 @@
 					<string>ProBook</string>
 					<key>179C</key>
 					<string>ProBook</string>
+					<key>17A9</key>
+					<string>ProBook</string>
 					<key>17F0</key>
 					<string>ProBook</string>
 					<key>17F3</key>
 					<string>ProBook</string>
 					<key>17F6</key>
 					<string>ProBook</string>
-				</dict>
-				<key>Lenovo</key>
-				<dict>
-					<key>Haswell-Ideapad</key>
-					<dict>
-						<key>DisableDevice</key>
-						<true/>
-					</dict>
-					<key>U430</key>
-					<string>Haswell-Ideapad</string>
+					<key>198F</key>
+					<string>ProBook</string>
+					<key>1942</key>
+					<string>ProBook</string>
+					<key>1949</key>
+					<string>ProBook</string>
 				</dict>
 			</dict>
 		</dict>
@@ -183,9 +179,9 @@
 					<key>CircularScrollTrigger</key>
 					<integer>0</integer>
 					<key>DivisorX</key>
-					<integer>1</integer>
+					<integer>5</integer>
 					<key>DivisorY</key>
-					<integer>1</integer>
+					<integer>5</integer>
 					<key>FingerZ</key>
 					<integer>30</integer>
 					<key>HorizontalScrollDivisor</key>
@@ -197,9 +193,9 @@
 					<key>MaxTapTime</key>
 					<integer>130000000</integer>
 					<key>MultiFingerHorizontalDivisor</key>
-					<integer>1</integer>
+					<integer>13</integer>
 					<key>MultiFingerVerticalDivisor</key>
-					<integer>1</integer>
+					<integer>13</integer>
 					<key>MultiFingerWLimit</key>
 					<integer>9</integer>
 					<key>StickyHorizontalScrolling</key>
@@ -271,9 +267,9 @@
 					<key>DisableZoneControl</key>
 					<integer>0</integer>
 					<key>Resolution</key>
-					<integer>2950</integer>
+					<integer>400</integer>
 					<key>ScrollResolution</key>
-					<integer>2950</integer>
+					<integer>400</integer>
 					<key>SwipeDeltaX</key>
 					<integer>800</integer>
 					<key>SwipeDeltaY</key>
@@ -281,7 +277,7 @@
 					<key>MouseCount</key>
 					<integer>0</integer>
 					<key>USBMouseStopsTrackpad</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>RightClickZoneLeft</key>
 					<integer>3800</integer>
 					<key>RightClickZoneRight</key>
@@ -297,7 +293,7 @@
 					<key>DragLockTempMask</key>
 					<integer>1048592</integer>
 					<key>MomentumScrollThreshY</key>
-					<integer>7</integer>
+					<integer>18</integer>
 					<key>MomentumScrollTimer</key>
 					<integer>10000000</integer>
 					<key>MomentumScrollMultiplier</key>
@@ -313,9 +309,9 @@
 					<key>FingerChangeIgnoreDeltas</key>
 					<integer>3</integer>
 					<key>BogusDeltaThreshX</key>
-					<integer>400</integer>
+					<integer>0</integer>
 					<key>BogusDeltaThreshY</key>
-					<integer>350</integer>
+					<integer>0</integer>
 					<key>UnitsPerMMX</key>
 					<integer>50</integer>
 					<key>UnitsPerMMY</key>
@@ -325,11 +321,13 @@
 					<key>MiddleClickTime</key>
 					<integer>100000000</integer>
 					<key>ScrollDeltaThreshX</key>
-					<integer>10</integer>
+					<integer>0</integer>
 					<key>ScrollDeltaThreshY</key>
-					<integer>10</integer>
+					<integer>0</integer>
 					<key>DragExitDelayTime</key>
 					<integer>1000000000</integer>
+					<key>DynamicEWMode</key>
+					<true/>
 				</dict>
 				<key>HPQOEM</key>
 				<dict>
@@ -356,11 +354,19 @@
 					<string>ProBook</string>
 					<key>179C</key>
 					<string>ProBook</string>
+					<key>17A9</key>
+					<string>ProBook</string>
 					<key>17F0</key>
 					<string>ProBook</string>
 					<key>17F3</key>
 					<string>ProBook</string>
 					<key>17F6</key>
+					<string>ProBook</string>
+					<key>198F</key>
+					<string>ProBook</string>
+					<key>1942</key>
+					<string>ProBook</string>
+					<key>1949</key>
 					<string>ProBook</string>
 				</dict>
 			</dict>
@@ -377,7 +383,7 @@
 		<key>com.apple.kpi.mach</key>
 		<string>9.0.0</string>
 		<key>org.rehabman.voodoo.driver.PS2Controller</key>
-		<string>1.8.11</string>
+		<string>${MODULE_VERSION}</string>
 	</dict>
 	<key>OSBundleRequired</key>
 	<string>Console</string>

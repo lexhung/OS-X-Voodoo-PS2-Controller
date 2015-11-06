@@ -241,7 +241,8 @@ private:
     bool tracksecondary;
     int xrest2, yrest2;
     bool clickedprimary;
-    bool _extendedwmode;
+    bool _extendedwmode, _extendedwmodeSupported;
+    int _dynamicEW;
 
     // normal state
 	int lastx, lasty, lastf;
@@ -308,15 +309,15 @@ private:
     uint64_t dragexitdelay;
     IOTimerEventSource* dragTimer;
    
-    SimpleAverage<int, 4> x_avg;
-    SimpleAverage<int, 4> y_avg;
+    SimpleAverage<int, 5> x_avg;
+    SimpleAverage<int, 5> y_avg;
     //DecayingAverage<int, int64_t, 1, 1, 2> x_avg;
     //DecayingAverage<int, int64_t, 1, 1, 2> y_avg;
     UndecayAverage<int, int64_t, 1, 1, 2> x_undo;
     UndecayAverage<int, int64_t, 1, 1, 2> y_undo;
     
-    SimpleAverage<int, 4> x2_avg;
-    SimpleAverage<int, 4> y2_avg;
+    SimpleAverage<int, 5> x2_avg;
+    SimpleAverage<int, 5> y2_avg;
     //DecayingAverage<int, int64_t, 1, 1, 2> x2_avg;
     //DecayingAverage<int, int64_t, 1, 1, 2> y2_avg;
     UndecayAverage<int, int64_t, 1, 1, 2> x2_undo;
@@ -344,6 +345,8 @@ private:
         MODE_WAIT2TAP =     102,    // "no touch"
         MODE_WAIT2RELEASE = 103,    // "touch"
     } touchmode;
+
+    void setClickButtons(UInt32 clickButtons);
     
     inline bool isTouchMode() { return touchmode & 1; }
     
@@ -373,9 +376,11 @@ private:
     
     void updateTouchpadLED();
     bool setTouchpadLED(UInt8 touchLED);
-    bool setTouchpadModeByte();
+    bool setTouchpadModeByte(); // set based on state
     void initTouchPad();
-    
+    bool setModeByte(UInt8 modeByteValue);
+    bool setModeByte(); // set based on state
+
     inline bool isFingerTouch(int z) { return z>z_finger && z<zlimit; }
     
     void onScrollTimer(void);

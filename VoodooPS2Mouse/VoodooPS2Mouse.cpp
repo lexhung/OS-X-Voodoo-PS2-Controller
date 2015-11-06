@@ -63,23 +63,6 @@ bool ApplePS2Mouse::init(OSDictionary * dict)
   if (!super::init(dict))
       return false;
 
-  // find config specific to Platform Profile
-  OSDictionary* list = OSDynamicCast(OSDictionary, dict->getObject(kPlatformProfile));
-  OSDictionary* config = ApplePS2Controller::makeConfigurationNode(list);
-  if (config)
-  {
-      // if DisableDevice is Yes, then do not load at all...
-      OSBoolean* disable = OSDynamicCast(OSBoolean, config->getObject(kDisableDevice));
-      if (disable && disable->isTrue())
-      {
-          config->release();
-          return false;
-      }
-#ifdef DEBUG
-      // save configuration for later/diagnostics...
-      setProperty(kMergedConfiguration, config);
-#endif
-  }
 
   // initialize state...
   _device                    = 0;
@@ -116,24 +99,21 @@ bool ApplePS2Mouse::init(OSDictionary * dict)
   _pendingbuttons = 0;
   _buttontime = 0;
   _maxmiddleclicktime = 100000000;
- 
-  // load settings
-  setParamPropertiesGated(config);
-  OSSafeRelease(config);
 
-  // remove some properties so system doesn't think it is a trackpad
-  // this should cause "Product" = "Mouse" in ioreg.
-  if (!actliketrackpad)
-  {
-    removeProperty("VendorID");
-    removeProperty("ProductID");
-    removeProperty("HIDPointerAccelerationType");
-    removeProperty("HIDScrollAccelerationType");
-    removeProperty("TrackpadScroll");
-  }
+  // announce version
+  extern kmod_info_t kmod_info;
+  IOLog("VoodooPS2Mouse: Version %s starting on OS X Darwin %d.%d.\n", kmod_info.version, version_major, version_minor);
 
-  IOLog("VoodooPS2Mouse Version 1.8.11 loaded...\n");
-	
+  // place version/build info in ioreg properties RM,Build and RM,Version
+  char buf[128];
+  snprintf(buf, sizeof(buf), "%s %s", kmod_info.name, kmod_info.version);
+  setProperty("RM,Version", buf);
+#ifdef DEBUG
+  setProperty("RM,Build", "Debug-" LOGNAME);
+#else
+  setProperty("RM,Build", "Release-" LOGNAME);
+#endif
+
   return true;
 }
 
@@ -169,6 +149,7 @@ void ApplePS2Mouse::setParamPropertiesGated(OSDictionary * config)
     };
     const struct {const char* name; uint64_t* var; } int64vars[]={
         {"MiddleClickTime",                 &_maxmiddleclicktime},
+        {"QuietTimeAfterTyping",            &maxaftertyping},
     };
     
     
@@ -274,6 +255,39 @@ ApplePS2Mouse* ApplePS2Mouse::probe(IOService * provider, SInt32 * score)
 
   ApplePS2MouseDevice* device  = (ApplePS2MouseDevice*)provider;
     
+  // find config specific to Platform Profile
+  OSDictionary* list = OSDynamicCast(OSDictionary, getProperty(kPlatformProfile));
+  OSDictionary* config = device->getController()->makeConfigurationNode(list, "Mouse");
+  if (config)
+  {
+      // if DisableDevice is Yes, then do not load at all...
+      OSBoolean* disable = OSDynamicCast(OSBoolean, config->getObject(kDisableDevice));
+      if (disable && disable->isTrue())
+      {
+          config->release();
+          return 0;
+      }
+#ifdef DEBUG
+      // save configuration for later/diagnostics...
+      setProperty(kMergedConfiguration, config);
+#endif
+  }
+
+  // load settings
+  setParamPropertiesGated(config);
+  OSSafeRelease(config);
+
+  // remove some properties so system doesn't think it is a trackpad
+  // this should cause "Product" = "Mouse" in ioreg.
+  if (!actliketrackpad)
+  {
+    removeProperty("VendorID");
+    removeProperty("ProductID");
+    removeProperty("HIDPointerAccelerationType");
+    removeProperty("HIDScrollAccelerationType");
+    removeProperty("TrackpadScroll");
+  }
+
   //
   // Check to see if acknowledges are being received for commands to the mouse.
   //
